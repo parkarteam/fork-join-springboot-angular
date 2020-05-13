@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  gatewayurl: 'http://localhost:9500'  
+  gatewayurl: 'http://api-gateway-dev.10.0.2.7.nip.io:9500'
 };
