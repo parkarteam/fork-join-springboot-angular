@@ -15,7 +15,7 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
 
-    const url = environment.gatewayurl.concat(this.GET_USERS_ENDPOINT);
+    const url = 'http://api-gateway-dev.10.0.2.7.nip.io'.concat(this.GET_USERS_ENDPOINT);
     console.log(' get users url ',url);
     return this._http.get<User[]>(url);
   }

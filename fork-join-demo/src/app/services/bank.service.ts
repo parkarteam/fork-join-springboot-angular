@@ -15,7 +15,7 @@ export class BankService {
 
   getBanks(): Observable<Bank[]> {
 
-    const url = environment.gatewayurl.concat(this.GET_BANKS_ENDPOINT);
+    const url = 'http://api-gateway-dev.10.0.2.7.nip.io'.concat(this.GET_BANKS_ENDPOINT);
     console.log(' get banks url ',url);
     return this._http.get<Bank[]>(url);
   }
