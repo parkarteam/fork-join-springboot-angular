@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY /tmp/workspace/cicd/cicd-banking-app-pipeline/fork-join-demo/nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /usr/share/nginx/html
 
