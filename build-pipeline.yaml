@@ -1,0 +1,112 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: banking-app-pipeline
+  namespace: cicd
+  selfLink: >-
+    /apis/build.openshift.io/v1/namespaces/cicd/buildconfigs/banking-app-pipeline
+  uid: 6357d815-e181-4f18-8379-a45e4bedee53
+  resourceVersion: '2739669'
+  creationTimestamp: '2020-05-14T09:10:51Z'
+spec:
+  nodeSelector: {}
+  output: {}
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: JenkinsPipeline
+    jenkinsPipelineStrategy:
+      jenkinsfile: |-
+        env.DEV_PROJECT = "dev"
+        env.STAGE_PROJECT ="stage"
+        pipeline {
+          agent{
+            label 'nodejs'
+          }
+          options { timeout(time: 40, unit: 'MINUTES') }
+          stages {
+            stage ('UI checkout'){
+              steps {
+                sh "echo '********  Project  checkout *******'"
+                git branch: 'master', url: "https://github.com/parkarteam/fork-join-springboot-angular.git"
+                sh "echo '******** END Project checkout *******'"
+              }
+            }
+            stage('npm install'){
+              steps{
+                dir('fork-join-demo'){
+                  sh "npm install --silent"
+                }
+             }
+            }
+             stage('UI Build') {
+               steps {
+                 dir('fork-join-demo') {
+                      sh "echo '******** UI Build *******'"                           
+                       sh "npm run build"
+                       sh "echo '******** END UI Build *******'"
+                    }
+                 }
+              }
+               stage('image build UI'){
+                steps{
+                  sh "echo  ******** UI image build ********"
+                  script {
+                    dir('fork-join-demo'){
+                       sh  "mkdir -p target/uiapp "
+                       sh "cp -r dist/ target/uiapp/dist/"
+                       sh "cp ./nginx.conf target/uiapp/nginx.conf"
+                      sh  "cp ./Dockerfile  target/uiapp/Dockerfile"
+                      sh "ls -l target/uiapp"
+                      openshift.withCluster() {
+                         openshift.withProject(env.DEV_PROJECT) {openshift.selector("bc", "ui-build").startBuild("--from-dir=target/uiapp", "--wait=true")}
+                      }
+                    }
+                  }
+                  sh "echo  ******** END UI image build ********"
+                }
+              }
+               stage('UI deploy to dev'){
+                steps{
+                  script{
+                     openshift.withCluster() {
+                       openshift.withProject(env.DEV_PROJECT) {
+                           openshift.selector("dc", "fork-join-angular").rollout().latest(); 
+                           openshift.tag("${env.DEV_PROJECT}/ui-build:latest", "${env.STAGE_PROJECT}/ui-build:stage")
+                       }
+                     }
+                  }
+                }
+              }
+              stage('Promote to STAGE?') {
+                  agent {
+                    label 'skopeo'
+                  }
+                  steps {
+                    timeout(time:30, unit:'MINUTES') {
+                      input message: "Promote to STAGE?", ok: "Promote"
+                    }
+                  }
+                }
+                stage('UI deploy to stage'){
+                  steps{
+                    script{
+                      openshift.withCluster() {
+                        openshift.withProject(env.STAGE_PROJECT) {
+                          openshift.selector("dc", "fork-join-angular").rollout().latest(); 
+                         }
+                       }
+                    }
+                  }
+                }
+          }
+        }
+  postCommit: {}
+  source:
+    type: None
+  triggers:
+    - type: ConfigChange
+  runPolicy: Serial
+status:
+  lastVersion: 34
