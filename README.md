@@ -204,6 +204,7 @@ $ oc import-image jenkins:2 --from=quay.io/openshift/origin-jenkins:latest --con
 $ oc import-image jenkins-agent-nodejs:latest --from=quay.io/openshift/origin-jenkins-agent-nodejs:latest --confirm -n cicd
 $ oc import-image jenkins-agent-maven:latest --from=quay.io/openshift/origin-jenkins-agent-maven:latest --confirm -n cicd
 $ oc import-image jenkins-agent-base:latest --from=quay.io/openshift/origin-jenkins-agent-base:latest --confirm -n cicd
+$ oc apply -f jenkins-configMaps.yaml
 Modify the route of Jenkins if the host does not work on browser
 ```
 
