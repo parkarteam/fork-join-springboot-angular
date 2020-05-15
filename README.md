@@ -185,15 +185,19 @@ service "fork-join-angular" created
 ### Openshift ARO setup
 
 #### Create Projects
+```
 oc new-project dev --display-name="Dev"
 oc new-project stage --display-name="Stage"
 oc new-project cicd --display-name="CI/CD"
-
+```
 #### Grant Jenkins Access to Projects
+```
 oc policy add-role-to-group edit system:serviceaccounts:cicd -n dev
 oc policy add-role-to-group edit system:serviceaccounts:cicd -n stage
+```
 
 To setup cicd project
+```
 $ oc project cicd
 $ oc process -f https://raw.githubusercontent.com/siamaksade/openshift-cd-demo/ocp-4.3/cicd-template.yaml | oc create -f -
 $ oc import-image jenkins:2 --from=quay.io/openshift/origin-jenkins:latest --confirm -n openshift
@@ -201,9 +205,10 @@ $ oc import-image jenkins-agent-nodejs:latest --from=quay.io/openshift/origin-je
 $ oc import-image jenkins-agent-maven:latest --from=quay.io/openshift/origin-jenkins-agent-maven:latest --confirm -n cicd
 $ oc import-image jenkins-agent-base:latest --from=quay.io/openshift/origin-jenkins-agent-base:latest --confirm -n cicd
 Modify the route of Jenkins if the host does not work on browser
+```
 
 To setup Dev and Stage application
-
+```
 git clone https://github.com/parkarteam/fork-join-springboot-angular.git && cd fork-join-springboot-angular
 $ oc login  # login into a project
 $ oc project dev
@@ -212,7 +217,7 @@ $ oc project stage
 $ oc create -f openshift/fork-join-openshift-deployment.yaml
 $ oc import-image bank-service:dev --from=ravirajk1007/fork-join-springboot-angular_bank-service:latest --confirm -n dev
 $ oc import-image user-service:dev --from=ravirajk1007/fork-join-springboot-angular_user-service:latest --confirm -n dev
-
+```
 Change the deployment config to use the image build by pipeline for angular app i.e. ui-build:latest
 Modify the image used in the deployment config for bank service app to use image bank-service:latest in openshift 
 Modify the image used in the deployment config for bank service app to use image user-service:latest
@@ -220,14 +225,6 @@ Modify the image used in the deployment config for bank service app to use image
 To setup PVC
 
 create a file share in Azure and apply storageclass, secret, pv and pvc and mount it to the desired application.
-
-```
-$ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular.git && cd fork-join-springboot-angular
-$ oc login  # login into a project
-$ oc create -f openshift/fork-join-openshift-deployment.yaml
-
-https://github.com/siamaksade/openshift-cd-demo
-
 
 ## Teardown openshift resources
 
