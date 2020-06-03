@@ -227,6 +227,10 @@ Change the deployment config to use the image build by pipeline for angular app 
 Modify the image used in the deployment config for bank service app to use image bank-service:dev in openshift
 Modify the image used in the deployment config for user service app to use image user-service:dev
 
+To setup Jenkins build pipeline, execute the below command on cicd project
+
+oc apply -f build-pipeline.yaml
+
 To setup PVC
 
 create a file share in Azure and apply storageclass, secret, pv and pvc and mount it to the desired application.
