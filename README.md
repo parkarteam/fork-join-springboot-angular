@@ -200,6 +200,7 @@ To setup cicd project
 ```
 $ oc project cicd
 $ oc process -f https://raw.githubusercontent.com/siamaksade/openshift-cd-demo/ocp-4.3/cicd-template.yaml | oc create -f -
+$ oc import-image postgresql:9.6 --from=postgres:9.6 --confirm -n openshift
 $ oc import-image jenkins:2 --from=quay.io/openshift/origin-jenkins:latest --confirm -n openshift
 $ oc import-image jenkins-agent-nodejs:latest --from=quay.io/openshift/origin-jenkins-agent-nodejs:latest --confirm -n cicd
 $ oc import-image jenkins-agent-maven:latest --from=quay.io/openshift/origin-jenkins-agent-maven:latest --confirm -n cicd
