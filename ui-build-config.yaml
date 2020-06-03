@@ -1,0 +1,32 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: ui-build
+  namespace: dev
+  uid: 9288cd03-7814-40be-a7fd-3b2eb1d704a5
+  resourceVersion: '101431'
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'ui-build:latest'
+  resources: {}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: dev
+        name: 'nginxbase:latest'
+  postCommit: {}
+  source:
+    type: Binary
+    binary: {}
+  triggers:
+    - type: ImageChange
+      imageChange:
+        lastTriggeredImageID: >-
+          nginx@sha256:637488545a21a1ff771549ef65f5e3c1a8dbd92c98d360ac489d76b857021a55
+    - type: ConfigChange
+  runPolicy: Serial
