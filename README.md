@@ -206,11 +206,14 @@ $ oc import-image jenkins-agent-nodejs:latest --from=quay.io/openshift/origin-je
 $ oc import-image jenkins-agent-maven:latest --from=quay.io/openshift/origin-jenkins-agent-maven:latest --confirm -n cicd
 $ oc import-image jenkins-agent-base:latest --from=quay.io/openshift/origin-jenkins-agent-base:latest --confirm -n cicd
 $ oc apply -f jenkins-configMaps.yaml
+Note: Use Jenkins image that is imported above and create a deployment using that image and change the route that is created by default to use port 8080 instead of 50000
+username is admin and password - password when using jenkins image from quay.io
 Modify the route of Jenkins if the host does not work on browser
 ```
 
 To setup Dev and Stage application
 ```
+install git
 git clone https://github.com/parkarteam/fork-join-springboot-angular.git && cd fork-join-springboot-angular
 $ oc login  # login into a project
 $ oc project dev
@@ -221,8 +224,8 @@ $ oc import-image bank-service:dev --from=ravirajk1007/fork-join-springboot-angu
 $ oc import-image user-service:dev --from=ravirajk1007/fork-join-springboot-angular_user-service:latest --confirm -n dev
 ```
 Change the deployment config to use the image build by pipeline for angular app i.e. ui-build:latest
-Modify the image used in the deployment config for bank service app to use image bank-service:latest in openshift 
-Modify the image used in the deployment config for bank service app to use image user-service:latest
+Modify the image used in the deployment config for bank service app to use image bank-service:dev in openshift
+Modify the image used in the deployment config for user service app to use image user-service:dev
 
 To setup PVC
 
