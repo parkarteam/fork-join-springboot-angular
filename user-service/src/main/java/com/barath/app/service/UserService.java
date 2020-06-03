@@ -65,16 +65,16 @@ public class UserService {
     @PostConstruct
     public void init(){
 
-        User user1 = new User(1L,"Barath",26,User.Gender.MALE);
-        User user2 = new User(2L,"Barath1",36,User.Gender.MALE);
-        User user3 = new User(3L,"Barath2",46,User.Gender.MALE);
-        User user4 = new User(4L,"Barath3",56,User.Gender.MALE);
-        User user5 = new User(5L,"Barath4",66,User.Gender.MALE);
-        User user6 = new User(6L,"Barath5",16,User.Gender.MALE);
-        User user7 = new User(7L,"Barath6",26,User.Gender.MALE);
-        User user8 = new User(8L,"Barath7",46,User.Gender.MALE);
-        User user9 = new User(9L,"Barath8",23,User.Gender.MALE);
-        User user10 = new User(10L,"Barath9",26,User.Gender.MALE);
+        User user1 = new User(1L,"Tom",26,User.Gender.MALE);
+        User user2 = new User(2L,"Adam",36,User.Gender.MALE);
+        User user3 = new User(3L,"Brett",46,User.Gender.MALE);
+        User user4 = new User(4L,"Glenn",56,User.Gender.MALE);
+        User user5 = new User(5L,"Tim",66,User.Gender.MALE);
+        User user6 = new User(6L,"Rick",16,User.Gender.MALE);
+        User user7 = new User(7L,"Rachel",26,User.Gender.FEMALE);
+        User user8 = new User(8L,"Monica",46,User.Gender.FEMALE);
+        User user9 = new User(9L,"John",23,User.Gender.MALE);
+        User user10 = new User(10L,"Jason",26,User.Gender.MALE);
 
 
         Arrays.asList(user1,user2,user3,user4,user5,user6,user7,user8,user9,user10)

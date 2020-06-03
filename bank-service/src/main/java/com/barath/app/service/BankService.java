@@ -60,14 +60,14 @@ public class BankService {
     @PostConstruct
     public void init(){
 
-        Bank bank1 = new Bank(1L,"ICICI BANK");
-        Bank bank2 = new Bank(2L,"HDFC BANK");
-        Bank bank3 = new Bank(3L,"IDBC BANK");
-        Bank bank4 = new Bank(4L,"SBI BANK");
-        Bank bank5 = new Bank(5L,"PUNJAB BANK");
-        Bank bank6 = new Bank(6L,"KODAK BANK");
-        Bank bank7 = new Bank(7L,"INDIAN BANK");
-        Bank bank8 = new Bank(7L,"INDIAN OVERSEAS BANK");
+        Bank bank1 = new Bank(1L,"Bank of America");
+        Bank bank2 = new Bank(2L,"Wells Fargo");
+        Bank bank3 = new Bank(3L,"First National Bank");
+        Bank bank4 = new Bank(4L,"Capital One Bank");
+        Bank bank5 = new Bank(5L,"Citibank");
+        Bank bank6 = new Bank(6L,"JPMorgan Chase");
+        Bank bank7 = new Bank(7L,"Morgan Stanley");
+        Bank bank8 = new Bank(7L,"Goldman Sachs");
         Arrays.asList(bank1,bank2,bank3,bank4,bank5,bank6,bank7,bank8)
                 .forEach(this::createBank);
 
