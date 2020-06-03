@@ -209,6 +209,7 @@ $ oc apply -f jenkins-configMaps.yaml
 Note: Use Jenkins image that is imported above and create a deployment using that image and change the route that is created by default to use port 8080 instead of 50000
 username is admin and password - password when using jenkins image from quay.io
 Modify the route of Jenkins if the host does not work on browser
+Need to add NodeJS tool if quay jenkins slaves doesn't work.
 ```
 
 To setup Dev and Stage application
@@ -220,9 +221,13 @@ $ oc project dev
 $ oc create -f openshift/fork-join-openshift-deployment.yaml
 $ oc project stage
 $ oc create -f openshift/fork-join-openshift-deployment.yaml
+$ oc import-image nginxbase--from=nginx:alpine --confirm -n dev
 $ oc import-image bank-service:dev --from=ravirajk1007/fork-join-springboot-angular_bank-service:latest --confirm -n dev
 $ oc import-image user-service:dev --from=ravirajk1007/fork-join-springboot-angular_user-service:latest --confirm -n dev
+$ oc apply -f ui-build-config.yaml
 ```
+Create an image stream on dev from console with name as 'ui-build'
+
 Change the deployment config to use the image build by pipeline for angular app i.e. ui-build:latest
 Modify the image used in the deployment config for bank service app to use image bank-service:dev in openshift
 Modify the image used in the deployment config for user service app to use image user-service:dev
@@ -234,6 +239,25 @@ oc apply -f build-pipeline.yaml
 To setup PVC
 
 create a file share in Azure and apply storageclass, secret, pv and pvc and mount it to the desired application.
+OR
+create storage class for azure-disk for jenkins pvc
+```
+# Create a storage class with azure disk name with following configurations/parameters:
+
+Name:                  azure-disk
+IsDefaultClass:        No
+Annotations:           description=azure disk
+Provisioner:           kubernetes.io/azure-disk
+Parameters:            kind=managed,storageaccounttype=Standard_LRS
+AllowVolumeExpansion:  <unset>
+MountOptions:          <none>
+ReclaimPolicy:         Delete
+VolumeBindingMode:     Immediate
+Events:                <none>
+
+$ Create pvc for that storage class and use it for jenkins
+$ create a route for gateway app based on the url from network tab from UI console
+```
 
 ## Teardown openshift resources
 
