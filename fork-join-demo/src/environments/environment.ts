@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  gatewayurl: 'http://api-gateway-dev.apps.parkar.consulting'
+  gatewayurl: 'http://api-gateway-dev.apps.i5dsdf1k.eastus2.aroapp.io'
 };
