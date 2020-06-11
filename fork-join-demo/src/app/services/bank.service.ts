@@ -15,7 +15,7 @@ export class BankService {
 
   getBanks(): Observable<Bank[]> {
 
-    const url = 'http://api-gateway-dev.apps.i5dsdf1k.eastus2.aroapp.io'.concat(this.GET_BANKS_ENDPOINT);
+    const url = 'http://api-gateway-stage.apps.i5dsdf1k.eastus2.aroapp.io'.concat(this.GET_BANKS_ENDPOINT);
     console.log(' get banks url ',url);
     return this._http.get<Bank[]>(url);
   }

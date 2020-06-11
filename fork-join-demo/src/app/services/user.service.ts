@@ -15,7 +15,7 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
 
-    const url = 'http://api-gateway-dev.apps.i5dsdf1k.eastus2.aroapp.io'.concat(this.GET_USERS_ENDPOINT);
+    const url = 'http://api-gateway-stage.apps.i5dsdf1k.eastus2.aroapp.io'.concat(this.GET_USERS_ENDPOINT);
     console.log(' get users url ',url);
     return this._http.get<User[]>(url);
   }
