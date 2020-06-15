@@ -28,6 +28,7 @@ spec:
           stages {
             stage ('UI checkout'){
               steps {
+                sh "rm -rf *"
                 sh "echo '********  Project  checkout *******'"
                 git branch: 'master', url: "https://github.com/parkarteam/fork-join-springboot-angular.git"
                 sh "echo '******** END Project checkout *******'"
